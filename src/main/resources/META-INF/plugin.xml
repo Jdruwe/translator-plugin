@@ -1,0 +1,30 @@
+<idea-plugin>
+    <id>be.jeroendruwe.plugins.translator</id>
+
+    <!-- TODO: update name -->
+    <name>Plugin display name here</name>
+    <vendor email="druwe.jeroen@gmail.com" url="https://www.jeroendruwe.be">jeroendruwe.be</vendor>
+
+    <!-- TODO: update description -->
+    <description><![CDATA[
+    Enter short description for your plugin here.<br>
+    <em>most HTML tags may be used</em>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <action id="TranslatorAction" class="translator.action.TranslatorAction" text="TranslatorAction Name"
+                description="TranslatorAction Desc">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
