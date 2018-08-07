@@ -13,4 +13,8 @@ public abstract class TranslationFile {
     public VirtualFile getVirtualFile() {
         return virtualFile;
     }
+
+    public String getIsoCode() {
+        return virtualFile.getNameWithoutExtension().substring(0, 2);
+    }
 }

@@ -4,10 +4,12 @@ import com.intellij.openapi.vfs.VirtualFile;
 import translator.exception.InvalidOriginException;
 import translator.model.JsonTranslationFile;
 import translator.model.TranslationFile;
+import translator.util.IsoUtil;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 
@@ -31,18 +33,23 @@ public class TranslationFileExtractor {
     public List<TranslationFile> getTranslationFiles() {
 
         return Arrays.stream(origin.getChildren())
-                .filter(Objects::nonNull)
                 .filter(VirtualFile::isValid)
+                .filter(isI18n())
                 .map(this::convertFile)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
+    private Predicate<VirtualFile> isI18n() {
+        return file -> IsoUtil.isValidISOLanguage(file.getNameWithoutExtension().substring(0, 2));
+    }
+
     private TranslationFile convertFile(VirtualFile file) {
 
         final String extension = file.getExtension();
-        if(extension != null) {
-            switch (extension){
+
+        if (extension != null) {
+            switch (extension) {
                 case EXTENSION_JSON:
                     return new JsonTranslationFile(file);
             }
@@ -50,5 +57,6 @@ public class TranslationFileExtractor {
 
         return null;
     }
+
 
 }
