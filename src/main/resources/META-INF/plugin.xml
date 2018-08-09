@@ -1,14 +1,12 @@
 <idea-plugin>
     <id>be.jeroendruwe.plugins.translator</id>
 
-    <!-- TODO: update name -->
-    <name>Plugin display name here</name>
+    <name>AEM Translator</name>
     <vendor email="druwe.jeroen@gmail.com" url="https://www.jeroendruwe.be">jeroendruwe.be</vendor>
 
-    <!-- TODO: update description -->
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    This plugin will make your life as an AEM developer a bit easier.<br>
+    Adding new translations is now possible in a breeze. The plugin will translate to all your available languages.<br>
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
@@ -22,8 +20,8 @@
     </extensions>
 
     <actions>
-        <action id="TranslatorAction" class="translator.action.TranslatorAction" text="TranslatorAction Name"
-                description="TranslatorAction Desc">
+        <action id="TranslatorAction" class="translator.action.TranslatorAction" text="AEM Translator"
+                description="Add new automatically generated translations">
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </action>
     </actions>
