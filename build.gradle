@@ -19,9 +19,14 @@ dependencies {
 
 intellij {
     version '2018.2'
-    pluginName 'Super Awsome Translator plugin'
+    pluginName 'AEM Translator'
 }
 patchPluginXml {
     changeNotes """
       Initial release."""
+}
+
+publishPlugin {
+    username intellijPublishUsername
+    password intellijPublishPassword
 }
