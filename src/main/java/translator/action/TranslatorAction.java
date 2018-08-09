@@ -33,9 +33,9 @@ public class TranslatorAction extends AnAction {
             handleRequest(translatorProcessor, request);
 
         } catch (InvalidOriginException ex) {
-            notify("Translator - Invalid origin", "Only directories are supported.", NotificationType.WARNING);
+            notify("AEM Translator - Invalid origin", "Only directories are supported.", NotificationType.WARNING);
         } catch (NoTranslationFilesFoundException e1) {
-            notify("Translator - None found", "No translation files found.", NotificationType.WARNING);
+            notify("AEM Translator - None found", "No translation files found.", NotificationType.WARNING);
         }
     }
 
@@ -45,7 +45,7 @@ public class TranslatorAction extends AnAction {
             // Can be null in case of a dialog cancel or close
             translatorProcessor.process(request);
         } else {
-            notify("Translator", "Operation has been cancelled.", NotificationType.INFORMATION);
+            notify("AEM Translator", "Operation has been cancelled.", NotificationType.INFORMATION);
         }
     }
 

@@ -18,7 +18,7 @@ public class TranslatorDialog extends DialogWrapper {
         super(project);
         translatorPanel = new TranslatorPanel(languages);
         init();
-        setTitle("Super Awesome Translator");
+        setTitle("AEM Translator");
     }
 
     @Nullable
