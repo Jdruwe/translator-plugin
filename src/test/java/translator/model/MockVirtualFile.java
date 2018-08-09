@@ -12,9 +12,11 @@ import java.io.OutputStream;
 public class MockVirtualFile extends VirtualFile {
 
     private String content;
+    private boolean isValid;
 
-    MockVirtualFile(String content) {
+    MockVirtualFile(String content, boolean isValid) {
         this.content = content;
+        this.isValid = isValid;
     }
 
     @NotNull
@@ -47,7 +49,7 @@ public class MockVirtualFile extends VirtualFile {
 
     @Override
     public boolean isValid() {
-        return false;
+        return isValid;
     }
 
     @Override
