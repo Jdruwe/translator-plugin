@@ -23,7 +23,7 @@ intellij {
 }
 patchPluginXml {
     changeNotes """
-      Initial release."""
+      Initial release of the AEM Translator plugin, version 0.1.2 (some minor fixes already included)."""
 }
 
 publishPlugin {
