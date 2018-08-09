@@ -1,12 +1,15 @@
 package translator.model;
 
 import com.intellij.openapi.vfs.VirtualFile;
+import translator.exception.InvalidFileException;
+
+import java.io.IOException;
 
 public abstract class TranslationFile {
 
     private VirtualFile virtualFile;
 
-    public TranslationFile(VirtualFile virtualFile) {
+    TranslationFile(VirtualFile virtualFile) {
         this.virtualFile = virtualFile;
     }
 
@@ -17,4 +20,10 @@ public abstract class TranslationFile {
     public String getIsoCode() {
         return virtualFile.getNameWithoutExtension().substring(0, 2);
     }
+
+    byte[] getContent() throws IOException {
+        return virtualFile.contentsToByteArray();
+    }
+
+    public abstract String addTranslation(String key, String value) throws IOException, InvalidFileException;
 }

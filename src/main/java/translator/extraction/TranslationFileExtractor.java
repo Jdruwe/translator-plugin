@@ -2,6 +2,7 @@ package translator.extraction;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import translator.exception.InvalidOriginException;
+import translator.exception.NoTranslationFilesFoundException;
 import translator.model.JsonTranslationFile;
 import translator.model.TranslationFile;
 import translator.util.IsoUtil;
@@ -30,14 +31,20 @@ public class TranslationFileExtractor {
         }
     }
 
-    public List<TranslationFile> getTranslationFiles() {
+    public List<TranslationFile> getTranslationFiles() throws NoTranslationFilesFoundException {
 
-        return Arrays.stream(origin.getChildren())
+        List<TranslationFile> files = Arrays.stream(origin.getChildren())
                 .filter(VirtualFile::isValid)
                 .filter(isI18n())
                 .map(this::convertFile)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+
+        if (files.isEmpty()) {
+            throw new NoTranslationFilesFoundException();
+        } else {
+            return files;
+        }
     }
 
     private Predicate<VirtualFile> isI18n() {

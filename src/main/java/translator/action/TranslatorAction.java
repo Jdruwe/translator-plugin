@@ -8,6 +8,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.vfs.VirtualFile;
 import translator.exception.InvalidOriginException;
+import translator.exception.NoTranslationFilesFoundException;
 import translator.extraction.TranslationFileExtractor;
 import translator.model.TranslationFile;
 import translator.model.TranslationRequest;
@@ -26,16 +27,29 @@ public class TranslatorAction extends AnAction {
 
         try {
 
-            // TODO: do I need to do this in the background?
             List<TranslationFile> translationFiles = new TranslationFileExtractor(origin).getTranslationFiles();
-
             TranslatorProcessor translatorProcessor = new TranslatorProcessor(e.getProject(), translationFiles);
             TranslationRequest request = translatorProcessor.getPromptedTranslationRequest();
-            translatorProcessor.process(request);
+            handleRequest(translatorProcessor, request);
 
         } catch (InvalidOriginException ex) {
-            Notifications.Bus.notify(new Notification(PLUGIN_GROUP_ID, "Invalid origin", "Only directories are supported.", NotificationType.WARNING));
+            notify("Translator - Invalid origin", "Only directories are supported.", NotificationType.WARNING);
+        } catch (NoTranslationFilesFoundException e1) {
+            notify("Translator - None found", "No translation files found.", NotificationType.WARNING);
         }
     }
 
+    private void handleRequest(TranslatorProcessor translatorProcessor, TranslationRequest request) {
+
+        if (request != null) {
+            // Can be null in case of a dialog cancel or close
+            translatorProcessor.process(request);
+        } else {
+            notify("Translator", "Operation has been cancelled.", NotificationType.INFORMATION);
+        }
+    }
+
+    private void notify(String title, String message, NotificationType notificationType) {
+        Notifications.Bus.notify(new Notification(PLUGIN_GROUP_ID, title, message, notificationType));
+    }
 }
