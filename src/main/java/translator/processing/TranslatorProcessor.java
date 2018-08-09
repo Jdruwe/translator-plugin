@@ -93,7 +93,7 @@ public class TranslatorProcessor {
                     for (int i = 0; i < numberOfTranslations; i++) {
 
                         TranslationFile translationFile = translationFiles.get(i);
-                        String translation = TranslateUtil.translate(request.getTranslation(), request.getLanguage(), translationFile.getIsoCode());
+                        String translation = getTranslation(request, translationFile.getIsoCode());
                         String newContent = translationFile.addTranslation(request.getKey(), translation);
                         updateTranslationFile(translationFile, newContent);
 
@@ -111,7 +111,17 @@ public class TranslatorProcessor {
         });
     }
 
+    private String getTranslation(TranslationRequest request, String isoCode) throws TranslationException {
+
+        if (request.getLanguage().equalsIgnoreCase(isoCode)) {
+            return request.getTranslation();
+        } else {
+            return TranslateUtil.translate(request.getTranslation(), request.getLanguage(), isoCode);
+        }
+    }
+
     private void showErrorMessage(String message) {
+        
         ApplicationManager.getApplication().invokeLater(
                 () -> Messages.showErrorDialog(project, message, "Translating"));
 
