@@ -15,6 +15,7 @@ import com.intellij.openapi.vfs.VfsUtil;
 import com.intellij.util.WaitForProgressToShow;
 import org.jetbrains.annotations.NotNull;
 import translator.exception.InvalidFileException;
+import translator.exception.InvalidFormatException;
 import translator.exception.TranslationException;
 import translator.model.TranslationFile;
 import translator.model.TranslationRequest;
@@ -94,33 +95,38 @@ public class TranslatorProcessor {
                         TranslationFile translationFile = translationFiles.get(i);
                         String translation = TranslateUtil.translate(request.getTranslation(), request.getLanguage(), translationFile.getIsoCode());
                         String newContent = translationFile.addTranslation(request.getKey(), translation);
-
-                        ApplicationManager.getApplication().invokeLater(() -> {
-
-                            try {
-                                WriteAction.run(() -> {
-                                    VfsUtil.saveText(translationFile.getVirtualFile(), newContent);
-                                });
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                        });
+                        updateTranslationFile(translationFile, newContent);
 
                         indicator.setFraction(((double) i + 1) / numberOfTranslations);
-
                     }
 
-                } catch (TranslationException e) {
-                    ApplicationManager.getApplication().invokeLater(
-                            () -> Messages.showErrorDialog(project, "Something went wrong while translating", "Translating"));
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (TranslationException | IOException e) {
+                    showErrorMessage("Something went wrong while translating");
                 } catch (InvalidFileException e) {
-                    e.printStackTrace();
+                    showErrorMessage("Some files became invalid while translating");
+                } catch (InvalidFormatException e) {
+                    showErrorMessage(e.getMessage());
                 }
             }
         });
+    }
 
+    private void showErrorMessage(String message) {
+        ApplicationManager.getApplication().invokeLater(
+                () -> Messages.showErrorDialog(project, message, "Translating"));
+
+    }
+
+    private void updateTranslationFile(TranslationFile translationFile, String newContent) {
+
+        ApplicationManager.getApplication().invokeLater(() -> {
+            try {
+                WriteAction.run(() -> {
+                    VfsUtil.saveText(translationFile.getVirtualFile(), newContent);
+                });
+            } catch (IOException e) {
+                Messages.showErrorDialog(project, "Something went wrong while saving the translation", "Translating");
+            }
+        });
     }
 }

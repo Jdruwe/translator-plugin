@@ -48,4 +48,12 @@ public class TranslatorPanel {
     public String getKey() {
         return StringUtil.notNullize(keyTextField.getText());
     }
+
+    public JTextField getTranslationTextField() {
+        return translationTextField;
+    }
+
+    public JTextField getKeyTextField() {
+        return keyTextField;
+    }
 }

@@ -2,6 +2,7 @@ package translator.model;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import translator.exception.InvalidFileException;
+import translator.exception.InvalidJsonException;
 
 import java.io.IOException;
 
@@ -25,5 +26,5 @@ public abstract class TranslationFile {
         return virtualFile.contentsToByteArray();
     }
 
-    public abstract String addTranslation(String key, String value) throws IOException, InvalidFileException;
+    public abstract String addTranslation(String key, String value) throws IOException, InvalidFileException, InvalidJsonException;
 }
