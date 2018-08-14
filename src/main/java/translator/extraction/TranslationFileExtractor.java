@@ -64,6 +64,4 @@ public class TranslationFileExtractor {
 
         return null;
     }
-
-
 }
