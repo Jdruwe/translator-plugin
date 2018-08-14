@@ -19,15 +19,21 @@ public class JsonTranslationFile extends TranslationFile {
 
     @Override
     public String addTranslation(String key, String value, boolean alphabetize) throws IOException, InvalidFileException, InvalidJsonException {
-
         validateFile();
-        ObjectMapper mapper = buildMapper(alphabetize);
+        final ObjectMapper mapper = buildMapper(alphabetize);
+        final Object obj = insertTranslation(key, value, mapper);
+        final String s = mapper.writeValueAsString(obj);
+        return removeLeadingSpace(s);
+    }
 
+    private Object insertTranslation(String key, String value, ObjectMapper mapper) throws IOException {
         JsonNode jsonNode = mapper.readTree(getContent());
         ((ObjectNode) jsonNode).put(key, value);
-        final Object obj = mapper.treeToValue(jsonNode, Object.class);
-        String s = mapper.writeValueAsString(obj);
+        return mapper.treeToValue(jsonNode, Object.class);
+    }
 
+    @NotNull
+    private String removeLeadingSpace(String s) {
         return s.replaceAll("\" :", "\":");
     }
 
