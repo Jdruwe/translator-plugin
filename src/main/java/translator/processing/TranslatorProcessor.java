@@ -74,6 +74,7 @@ public class TranslatorProcessor {
 
         return translationFiles.stream()
                 .map(TranslationFile::getIsoCode)
+                .distinct()
                 .toArray(String[]::new);
     }
 
