@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class JsonTranslationFileTest {
 
     @Test
-    public void addTranslation_keyAndValue_updatedJson() throws IOException, InvalidFileException, InvalidJsonException {
+    public void addTranslation_NonExistingKeyAndValue_updatedJson() throws IOException, InvalidFileException, InvalidJsonException {
 
         String json = "{ \"account.account\" : \"Account\", \"account.activation.already.exists\" : \"Gelieve je aan te melden via het accountmenu.\" }";
         JsonTranslationFile jsonTranslationFile = new JsonTranslationFile(new MockVirtualFile(json, true));
@@ -23,4 +23,15 @@ public class JsonTranslationFileTest {
                 "}", newContent);
     }
 
+    @Test
+    public void addTranslation_ExistingKeyAndValue_updatedJson() throws IOException, InvalidFileException, InvalidJsonException {
+
+        String json = "{ \"account.account\" : \"Account\", \"account.activation.already.exists\" : \"Gelieve je aan te melden via het accountmenu.\" }";
+        JsonTranslationFile jsonTranslationFile = new JsonTranslationFile(new MockVirtualFile(json, true));
+        String newContent = jsonTranslationFile.addTranslation("account.account", "Account new translation");
+        assertEquals("{\n" +
+                "  \"account.account\": \"Account new translation\",\n" +
+                "  \"account.activation.already.exists\": \"Gelieve je aan te melden via het accountmenu.\"\n" +
+                "}", newContent);
+    }
 }
