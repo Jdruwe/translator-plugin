@@ -2,11 +2,7 @@ package translator.ui;
 
 import com.intellij.openapi.util.text.StringUtil;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class TranslatorPanel {
 
@@ -14,14 +10,15 @@ public class TranslatorPanel {
     private JPanel mainPanel;
     private JComboBox languageComboBox;
     private JTextField keyTextField;
+    private JCheckBox alphabetizeCheckBox;
 
-    public TranslatorPanel(String[] languages) {
+    TranslatorPanel(String[] languages) {
         fillLanguagesComboBox(languages);
         setPlaceholder(translationTextField, "Translation");
         setPlaceholder(keyTextField, "Key");
     }
 
-    public JComponent getContent() {
+    JComponent getContent() {
         return mainPanel;
     }
 
@@ -44,16 +41,19 @@ public class TranslatorPanel {
         return StringUtil.notNullize(translationTextField.getText());
     }
 
+    public boolean isAlphabetizeRequested() {
+        return alphabetizeCheckBox.isSelected();
+    }
 
     public String getKey() {
         return StringUtil.notNullize(keyTextField.getText());
     }
 
-    public JTextField getTranslationTextField() {
+    JTextField getTranslationTextField() {
         return translationTextField;
     }
 
-    public JTextField getKeyTextField() {
+    JTextField getKeyTextField() {
         return keyTextField;
     }
 }

@@ -49,7 +49,7 @@ public class TranslatorProcessor {
 
             if (translatorDialog.getExitCode() == DialogWrapper.OK_EXIT_CODE) {
                 TranslatorPanel p = translatorDialog.getTranslatorPanel();
-                TranslationRequest request = new TranslationRequest(p.getLanguage(), p.getKey(), p.getTranslation());
+                TranslationRequest request = new TranslationRequest(p.getLanguage(), p.getKey(), p.getTranslation(), p.isAlphabetizeRequested());
                 translationRequestRef.set(request);
             }
 
@@ -94,7 +94,7 @@ public class TranslatorProcessor {
 
                         TranslationFile translationFile = translationFiles.get(i);
                         String translation = getTranslation(request, translationFile.getIsoCode());
-                        String newContent = translationFile.addTranslation(request.getKey(), translation);
+                        String newContent = translationFile.addTranslation(request.getKey(), translation, request.isAlphabetizeRequested());
                         updateTranslationFile(translationFile, newContent);
 
                         indicator.setFraction(((double) i + 1) / numberOfTranslations);
@@ -121,7 +121,7 @@ public class TranslatorProcessor {
     }
 
     private void showErrorMessage(String message) {
-        
+
         ApplicationManager.getApplication().invokeLater(
                 () -> Messages.showErrorDialog(project, message, "Translating"));
 
