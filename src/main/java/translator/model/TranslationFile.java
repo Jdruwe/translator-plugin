@@ -26,5 +26,5 @@ public abstract class TranslationFile {
         return virtualFile.contentsToByteArray();
     }
 
-    public abstract String addTranslation(String key, String value) throws IOException, InvalidFileException, InvalidJsonException;
+    public abstract String addTranslation(String key, String value, boolean alphabetize) throws IOException, InvalidFileException, InvalidJsonException;
 }
