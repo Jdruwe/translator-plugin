@@ -7,6 +7,7 @@
     <description><![CDATA[
     This plugin will make your life as an AEM developer a bit easier.<br>
     Adding new translations is now possible in a breeze. The plugin will translate to all your available languages.<br>
+    <a href="https://imgur.com/6vvgMJI"><img src="https://i.imgur.com/6vvgMJI.gif" title="source: imgur.com" /></a>
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
@@ -14,6 +15,8 @@
     <!-- uncomment to enable plugin in all products
     <depends>com.intellij.modules.lang</depends>
     -->
+
+    <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
